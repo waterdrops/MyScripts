@@ -6,6 +6,7 @@ if (!obj.responses || obj.responses.length < 2 || 'etag' in obj.responses[0].hea
 try {
     const timestamp = Math.floor(Date.now() / 1000);
     const userdata = JSON.parse(obj.responses[0].body);
+    if (!userdata.shopItems) userdata.shopItems = [];
     userdata.shopItems.push({
         id: 'gold_subscription',
         purchaseDate: timestamp - 172800,
@@ -20,6 +21,7 @@ try {
         }
     });
     userdata.subscriberLevel = 'GOLD';
+    if (!userdata.trackingProperties) userdata.trackingProperties = {};
     userdata.trackingProperties.has_item_immersive_subscription = true;
     userdata.trackingProperties.has_item_premium_subscription = true;
     userdata.trackingProperties.has_item_live_subscription = true;
