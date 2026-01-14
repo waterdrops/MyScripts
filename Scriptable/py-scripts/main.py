@@ -21,7 +21,6 @@ def run_all_tasks():
         ("小小哈士奇", xiaohaios_sign.main_task),
         ("雨晨分享站", yuchengyouxi_sign.main_task),
         ("mmios.net", mmios_sign.main_task),
-        ("不背单词", bubei_sign.main_task),
     ]
 
     for name, func in tasks:
@@ -42,4 +41,5 @@ def run_all_tasks():
     print("所有任务执行完毕。")
 
 if __name__ == "__main__":
+
     run_all_tasks()
