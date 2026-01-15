@@ -3,7 +3,8 @@
 #!author=Takagivegeta
 
 [Script]
-duolingo_max = type=http-response,script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/lingoDuo/lingoDuo-xaM-shadowRK.js,pattern=^https:\/\/ios-api-2\.duolingo\.cn\/2023-05-23\/batch,max-size=0,requires-body=true,timeout=10,enable=true
+duolingo_max = type=http-response,script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/lingoDuo/lingoDuo-xaM.js,pattern=^https:\/\/ios-api-2\.duolingo\.cn\/2023-05-23\/batch,max-size=0,requires-body=true,timeout=10,enable=true
 
 [MITM]
 hostname = %APPEND% ios-api-2.duolingo.cn
+
