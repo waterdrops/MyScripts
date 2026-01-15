@@ -1,5 +1,5 @@
-let obj = JSON.parse($response.body);
 try {
+    let obj = JSON.parse($response.body);
     if (obj.responses && obj.responses.length >= 2 && !('etag' in obj.responses[0].headers)) {
         const now = Math.floor(Date.now() / 1000);
         const userdata = JSON.parse(obj.responses[0].body);
@@ -25,6 +25,8 @@ try {
         userdata.trackingProperties.has_item_gold_subscription = true;
         userdata.trackingProperties.has_item_max_subscription = true;
         obj.responses[0].body = JSON.stringify(userdata);
+        $done({ body: JSON.stringify(obj) })
     }
-} catch (e) {}
-$done({ body: JSON.stringify(obj) });
+} catch (e) {
+    $done({});
+}
