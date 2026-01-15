@@ -1,7 +1,6 @@
 try {
     let obj = JSON.parse($response.body);
-    if (!obj.responses || obj.responses.length < 2 || 'etag' in obj.responses[0].headers) $done({});
-    else {
+    if (obj.responses && obj.responses.length >= 2) {
         let userdata = JSON.parse(obj.responses[0].body);
         const timestamp = Math.floor(Date.now() / 1000);
         if (!userdata.shopItems) userdata.shopItems = [];
@@ -30,7 +29,7 @@ try {
         props.forEach(p => userdata.trackingProperties[p] = true);
         obj.responses[0].body = JSON.stringify(userdata);
         $done({ body: JSON.stringify(obj) });
-    }
+    } else $done({});
 } catch (e) {
     $done({});
 }
