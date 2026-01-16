@@ -3,8 +3,7 @@
 #!author=Takagivegeta
 
 [Script]
-duolingo_max_intl = type=http-response,pattern=^https?:\/\/ios-api-cf\.duolingo\.com\/2023-05-23\/batch$,script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/main/lingoDuo/lingoDuo-xaM.js,requires-body=true,max-size=31457280,timeout=120
-duolingo_max_cn = type=http-response,pattern=^https?:\/\/ios-api-2\.duolingo\.cn\/2023-05-23\/batch$,script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/main/lingoDuo/lingoDuo-xaM.js,requires-body=true,max-size=31457280,timeout=120
+duolingo_max = type=http-response,pattern=^https?:\/\/ios-api-(2\.duolingo\.cn|cf\.duolingo\.com)\/2023-05-23\/batch$,script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/main/lingoDuo/lingoDuo-xaM.js,requires-body=true,max-size=31457280,timeout=120
 
 [MITM]
 hostname = %APPEND% ios-api-cf.duolingo.com, ios-api-2.duolingo.cn
