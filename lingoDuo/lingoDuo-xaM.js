@@ -1,8 +1,6 @@
-let body = $response.body;
 try {
-    const obj = JSON.parse(body);
-    if (!obj.responses || obj.responses.length < 2 || (obj.responses[0].headers && 'etag' in obj.responses[0].headers)); // skip
-    else {
+    let obj = JSON.parse($response.body);
+    if (obj.responses && obj.responses.length >= 2 && !('etag' in obj.responses[0].headers)) {
         const now = Math.floor(Date.now() / 1000);
         const userdata = JSON.parse(obj.responses[0].body);
         if (!userdata.shopItems) userdata.shopItems = [];
@@ -27,9 +25,8 @@ try {
         userdata.trackingProperties.has_item_gold_subscription = true;
         userdata.trackingProperties.has_item_max_subscription = true;
         obj.responses[0].body = JSON.stringify(userdata);
-        body = JSON.stringify(obj);
     }
+    $done({ body: JSON.stringify(obj) })
 } catch (e) {
-    body = $response.body;
+    $done({});
 }
-$done({ body });
