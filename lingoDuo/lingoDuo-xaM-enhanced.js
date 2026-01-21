@@ -34,7 +34,7 @@ try {
         const xpMultiplier = parseInt($argument.multiplier);
         if (xpBoostEnabled) {
             let foundXpBoost = false;
-            for (let i = 0; i < userdata.shopItems.length; i++) {
+            for (let i = 0; i < userdata.shopItems.length; i++)
                 if (userdata.shopItems[i].id === 'xp_boost_stackable') {
                     userdata.shopItems[i].purchaseDate = now;
                     userdata.shopItems[i].expectedExpirationDate = now + 3600;
@@ -42,7 +42,6 @@ try {
                     foundXpBoost = true;
                     break;
                 }
-            }
             if (!foundXpBoost) 
                 userdata.shopItems.push({
                     id: 'xp_boost_stackable',
