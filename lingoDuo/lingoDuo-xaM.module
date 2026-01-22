@@ -1,7 +1,6 @@
 #!name=Duolingo Max 解锁
 #!desc=解锁 Duolingo Max 会员
 #!author=Takagivegeta
-#!icon=https://github.com/TAKAGIVEGETA/MyScripts/blob/main/lingoDuo/lingoDuo.png?raw=true
 
 [MITM]
 hostname = %APPEND% ios-api-*.duolingo.com, ios-api-*.duolingo.cn, api*.duolingo.com, api*.duolingo.cn
