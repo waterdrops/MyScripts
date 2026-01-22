@@ -9,10 +9,11 @@ xp_boost = switch, tag = 开启 XP 经验加倍, desc = 开启后练习将获得
 multiplier = select, "2", "3", tag = 选择经验倍数, desc = 经验倍数
 timer_switch = switch, tag = 限时挑战时间增强, desc = 开启后可在限时挑战中自定义时长
 timer_mins = input, "60", tag = 自定义挑战时长(分钟), desc = 请输入你想要的时长
-instant_clear = switch, tag = 直接通关(仅供娱乐), desc = 开启后进入任何关卡直接通关
+instant_clear = switch, tag = 直接通关(仅供娱乐), desc = 开启后进入关卡直接通关
+unlock_all = switch, tag = 解锁所有关卡, desc = 开启后将解锁当前课程的所有关卡
 
 [Script]
-http-response ^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/2023-05-23\/batch script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/main/lingoDuo/lingoDuo-xaM-enhanced.js, requires-body=true, timeout=120, tag=Max 解锁, argument=[{xp_boost}, {multiplier}]
+http-response ^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/2023-05-23\/batch script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/main/lingoDuo/lingoDuo-xaM-enhanced.js, requires-body=true, timeout=120, tag=Max 解锁, argument=[{xp_boost}, {multiplier}, {unlock_all}]
 
 http-response ^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/.*\/live-ops-challenges script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/lingoDuo/lingoDuo-time-modifier.js, requires-body=true, timeout=120, tag=挑战时长修改, enable={timer_switch}, argument=[{timer_mins}]
 
