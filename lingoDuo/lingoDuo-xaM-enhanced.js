@@ -51,6 +51,23 @@ try {
                     xpBoostMultiplier: xpMultiplier
                 });
         }
+
+        if (userdata.currentCourse && Array.isArray(userdata.currentCourse.pathSectioned)) {
+            userdata.currentCourse.pathSectioned.forEach(section => {
+                if (Array.isArray(section.units)) {
+                    section.units.forEach(unit => {
+                        if (Array.isArray(unit.levels)) {
+                            unit.levels.forEach(level => {
+                                if (level.state === 'locked') {
+                                    level.state = 'active';
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+        
         obj.responses[0].body = JSON.stringify(userdata);
     }
     $done({ body: JSON.stringify(obj) });
