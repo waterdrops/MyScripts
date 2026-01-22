@@ -15,7 +15,7 @@ instant_clear = switch, tag = 直接通关, desc = 开启后进入关卡直接�
 [Script]
 http-response ^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/2023-05-23\/batch script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/main/lingoDuo/lingoDuo-xaM-enhanced.js, requires-body=true, timeout=120, tag=Batch 修改, argument=[{xp_boost}, {multiplier}, {unlock_all}]
 
-http-response ^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/.*\/live-ops-challenges script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/lingoDuo/lingoDuo-time-modifier.js, requires-body=true, timeout=120, tag=挑战时长修改, enable={timer_switch}, argument=[{timer_mins}]
+http-response ^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/.*\/live-ops-challenges script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/lingoDuo/lingoDuo-time-modifier.js, requires-body=true, timeout=120, tag=限时挑战时长修改, enable={timer_switch}, argument=[{timer_mins}]
 
 http-response ^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/.*\/sessions script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/lingoDuo/lingoDuo-clear.js, requires-body=true, timeout=120, tag=直接通关(部分关卡不支持), enable={instant_clear}
 
