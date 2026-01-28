@@ -1,6 +1,6 @@
 try {
     let obj = JSON.parse($response.body);
-    let seconds = parseInt($argument.timer_mins) * 60;
+    let seconds = 5 * 60;
     if (!isNaN(seconds) && seconds > 0 && obj.liveOpsChallenges)
         obj.liveOpsChallenges.forEach(challenge => {
             if (challenge.initialTime) challenge.initialTime = seconds;
