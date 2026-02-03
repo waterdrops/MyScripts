@@ -4,9 +4,7 @@ try {
     const patched = {
         purchasableFeatures: [
             "CAN_PURCHASE_IAP",
-            "CAN_PURCHASE_SUBSCRIPTION",
-            "CAN_PURCHASE_MAX",
-            "CAN_PURCHASE_APPLE_GIFT_SUBSCRIPTION"
+            "CAN_PURCHASE_MAX"
         ],
         subscriptionFeatures: [
             "NO_NETWORK_ADS",
