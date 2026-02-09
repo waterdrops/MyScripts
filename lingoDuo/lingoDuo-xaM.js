@@ -29,6 +29,7 @@ try {
   let shopItems = userdata.shopItems;
   if (!shopItems) shopItems = userdata.shopItems = [];
   
+  // subscription upsert 
   const subscriptionInfo = {
     expectedExpiration: now + 31536000,
     productId: "com.duolingo.DuolingoMobile.subscription.Gold.TwelveMonth.24Q2Max.168",
@@ -42,6 +43,7 @@ try {
   for (let i = 0, l = shopItems.length; i < l; i++) {
     const it = shopItems[i];
     if (it && it.id === "gold_subscription") {
+      it.itemName = "gold_subscription";
       it.purchasePrice = 0;
       it.purchaseDate = now - 172800;
       it.subscriptionInfo = subscriptionInfo;
@@ -58,7 +60,38 @@ try {
       subscriptionInfo
     });
   }
+
+  // xp_boost_stackable upsert 
+  // 随机选择 2 或 3 作为倍数
+  const xpMultiplier = Math.random() < 0.5 ? 2 : 3;
   
+  let foundXpBoost = false;
+  for (let i = 0, l = shopItems.length; i < l; i++) {
+    const it = shopItems[i];
+    if (it && it.id === "xp_boost_stackable") {
+      it.itemName = "xp_boost_stackable";
+      it.purchaseDate = now;
+      it.purchasePrice = 0;
+      it.expectedExpirationDate = now + 172800;
+      it.remainingEffectDurationInSeconds = now + 3600;
+      it.xpBoostMultiplier = xpMultiplier;
+      foundXpBoost = true;
+      break;
+    }
+  }
+
+  if (!foundXpBoost) {
+    shopItems.push({
+      id: "xp_boost_stackable",
+      itemName: "xp_boost_stackable",
+      purchaseDate: now,
+      purchasePrice: 0,
+      expectedExpirationDate: now + 172800,
+      remainingEffectDurationInSeconds: now + 3600,
+      xpBoostMultiplier: xpMultiplier
+    });
+  }
+
   userdata.subscriberLevel = "GOLD";
   
   // ---------- 4. trackingProperties ----------
