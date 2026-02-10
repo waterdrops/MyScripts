@@ -1,14 +1,14 @@
 try {
   const raw = $response.body;
   
-  // ---------- 0. 熔断 ----------
+  // ---------- 0. short circuit ----------
   const etagIdx = raw.indexOf('"etag"', 0, 500);
   const respIdx = raw.indexOf('"responses"', 0, 100);
   if (respIdx === -1 || etagIdx !== -1) {
     $done({ body: raw });
   }
   
-  // ---------- 1. parse 外层 ----------
+  // ---------- 1. parse outer layer ----------
   const obj = JSON.parse(raw);
   if (!obj.responses || obj.responses.length < 1) {
     $done({ body: raw });
@@ -28,67 +28,68 @@ try {
   // ---------- 3. shopItems upsert ----------
   let shopItems = userdata.shopItems;
   if (!shopItems) shopItems = userdata.shopItems = [];
-  
-  // subscription upsert 
-  const subscriptionInfo = {
-    expectedExpiration: now + 31536000,
-    productId: "com.duolingo.DuolingoMobile.subscription.Gold.TwelveMonth.24Q2Max.168",
-    renewer: "APPLE",
-    renewing: true,
-    tier: "twelve_month",
-    type: "gold"
-  };
-  
-  let found = false;
+
+  let goldItem = null;
+  let xpItem = null;
+
   for (let i = 0, l = shopItems.length; i < l; i++) {
     const it = shopItems[i];
-    if (it && it.id === "gold_subscription") {
-      it.itemName = "gold_subscription";
-      it.purchasePrice = 0;
-      it.purchaseDate = now - 172800;
-      it.subscriptionInfo = subscriptionInfo;
-      found = true;
-      break;
+    if (!it || !it.id) continue;
+
+    if (it.id === 'gold_subscription') {
+      goldItem = it;
+      if (xpItem) break;
+    } else if (it.id === 'xp_boost_stackable') {
+      xpItem = it;
+      if (goldItem) break;
     }
   }
-  
-  if (!found) {
+
+  // ---------- 3. upsert gold_subscription ----------
+  const subInfo = {
+    expectedExpiration: now + 31536000,
+    productId:
+      'com.duolingo.DuolingoMobile.subscription.Gold.TwelveMonth.24Q2Max.168',
+    renewer: 'APPLE',
+    renewing: true,
+    tier: 'twelve_month',
+    type: 'gold',
+  };
+
+  if (goldItem) {
+    goldItem.itemName = 'gold_subscription';
+    goldItem.purchasePrice = 0;
+    goldItem.purchaseDate = now - 172800;
+    goldItem.subscriptionInfo = subInfo;
+  } else {
     shopItems.push({
-      id: "gold_subscription",
+      id: 'gold_subscription',
+      itemName: 'gold_subscription',
       purchasePrice: 0,
       purchaseDate: now - 172800,
-      subscriptionInfo
+      subscriptionInfo: subInfo,
     });
   }
 
-  // xp_boost_stackable upsert 
-  // 随机选择 2 或 3 作为倍数
-  const xpMultiplier = Math.random() < 0.5 ? 2 : 3;
-  
-  let foundXpBoost = false;
-  for (let i = 0, l = shopItems.length; i < l; i++) {
-    const it = shopItems[i];
-    if (it && it.id === "xp_boost_stackable") {
-      it.itemName = "xp_boost_stackable";
-      it.purchaseDate = now;
-      it.purchasePrice = 0;
-      it.expectedExpirationDate = now + 172800;
-      it.remainingEffectDurationInSeconds = now + 3600;
-      it.xpBoostMultiplier = xpMultiplier;
-      foundXpBoost = true;
-      break;
-    }
-  }
+  // ---------- 4. upsert xp_boost_stackable ----------
+  // bit operation, choose 2 or 3 as the multiplier randomly
+  const xpMultiplier = (now & 1) === 0 ? 2 : 3;
+  const xpExpire = now + 3000;
 
-  if (!foundXpBoost) {
+  if (xpItem) {
+    xpItem.itemName = 'xp_boost_stackable';
+    xpItem.purchaseDate = now;
+    xpItem.purchasePrice = 0;
+    xpItem.expectedExpirationDate = xpExpire;
+    xpItem.xpBoostMultiplier = xpMultiplier;
+  } else {
     shopItems.push({
-      id: "xp_boost_stackable",
-      itemName: "xp_boost_stackable",
+      id: 'xp_boost_stackable',
+      itemName: 'xp_boost_stackable',
       purchaseDate: now,
       purchasePrice: 0,
-      expectedExpirationDate: now + 172800,
-      remainingEffectDurationInSeconds: now + 3600,
-      xpBoostMultiplier: xpMultiplier
+      expectedExpirationDate: xpExpire,
+      xpBoostMultiplier: xpMultiplier,
     });
   }
 
@@ -102,10 +103,10 @@ try {
   tp.has_item_gold_subscription = true;
   tp.has_item_max_subscription = true;
   
-  // ---------- 5. 写回 ----------
+  // ---------- 5. write back ----------
   r0.body = JSON.stringify(parsedBody);
   $done({ body: JSON.stringify(obj) });
   
 } catch (e) {
-  $done({ body: $response.body });  // 安全兜底
+  $done({});  // fallback to original body
 }
