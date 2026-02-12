@@ -423,7 +423,7 @@ const UI = {
         alert.title = "切换主页数据源"
         SOURCES.forEach(s => alert.addAction(s.name))
         alert.addCancelAction("取消")
-        const idx = await alert.presentSheet()
+        const idx = await alert.present()
         if (idx !== -1) {
             Store.setCurrentSourceIndex(idx)
             // 1. 立即清空数据并重置状态
@@ -529,7 +529,7 @@ const UI = {
 
         episodes.forEach(ep => alert.addAction(ep.name))
         alert.addCancelAction("返回")
-        const index = await alert.presentSheet()
+        const index = await alert.present()
         if (index !== -1) await this.playVideo(episodes[index].url)
         await this.table.present(true)
     },
