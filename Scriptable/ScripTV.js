@@ -193,7 +193,7 @@ const API = {
                     }))
                     onReceive(items)
                 }
-            } catch (e) {}
+            } catch (e) { }
         })
         await Promise.all(promises)
     },
@@ -245,16 +245,18 @@ const UI = {
 
         for (const video of this.videos) {
             const row = new UITableRow()
-            row.height = 100
-            row.cellSpacing = 10
+            row.height = 125
+            row.cellSpacing = 15
             // 封面
             const imgCell = row.addImageAtURL(video.vod_pic || "https://via.placeholder.com/150")
-            imgCell.widthWeight = 18
+            imgCell.widthWeight = 20
+            imgCell.centerAligned()
             // 标题 + 来源/时间
             const subText = video._source_name
                 ? `来源: ${video._source_name} | ${video.vod_remarks || ""}`
                 : `更新: ${video.vod_remarks || video.vod_time}`
             const titleCell = row.addText(video.vod_name, subText)
+            titleCell.leftAligned()
             titleCell.widthWeight = 70
             titleCell.titleFont = Font.boldSystemFont(16)
             titleCell.subtitleFont = Font.systemFont(12)
@@ -308,8 +310,8 @@ const UI = {
     async refresh(table) {
         table.removeAllRows()
         const currentSource = Store.getCurrentSource()
-        // 1. 初始加载
-        if (this.videos.length === 0 && !this.keyword && !this.isLoading) {
+        // 1. 初始加载（仅在非收藏模式下自动加载）
+        if (this.videos.length === 0 && !this.keyword && !this.isLoading && this.searchMode !== "FAVORITE") {
             this.isLoading = true
             try {
                 const data = await API.fetchLatest(currentSource.url, 1)
@@ -339,7 +341,7 @@ const UI = {
         titleCell.titleFont = Font.boldSystemFont(20)
         titleCell.titleColor = THEME_COLOR
         titleCell.subtitleColor = Color.gray()
-        titleCell.widthWeight = 50
+        titleCell.widthWeight = 56
         // 首页按钮
         const homeBtn = headerRow.addButton("🏠")
         homeBtn.rightAligned()
