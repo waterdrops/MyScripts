@@ -19,4 +19,4 @@ obj.subscriber.subscriptions = {
         "unsubscribe_detected_at": null
     }
 };
-$done({ JSON.stringify(obj) });
+$done({ body: JSON.stringify(obj) });
