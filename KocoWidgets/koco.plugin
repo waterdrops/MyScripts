@@ -1,0 +1,9 @@
+#!name=Koco Widget 解锁
+#!desc=Koco Widget 终身会员解锁
+#!author=Takagivegeta
+
+[Script]
+http-response https://api.revenuecat.com/v1/(receipts|subscribers)/* script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/KocoWidgets/koco.js,requires-body=1,max-size=0
+
+[MITM]
+hostname = api.revenuecat.com
