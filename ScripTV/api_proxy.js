@@ -76,6 +76,7 @@ if (method.toUpperCase() === "OPTIONS") {
                 headers["Access-Control-Allow-Headers"] = "*";
                 headers["Content-Type"] = "application/json; charset=utf-8";
 
+                console.log(data.total);
                 $done({
                     response: {
                         status: resp.status || 200,
