@@ -1,0 +1,9 @@
+[Rule]
+DOMAIN, www.scrip.tv, PROXY
+
+[Script]
+# 匹配 API 请求，交由 api_handler.js 处理（发起真实请求并处理数据）
+http-request ^https?://www\.scrip\.tv/api/ script-path=api_handler.js, requires-body=true
+
+# 匹配其他所有前端页面请求，交由 html_handler.js 处理（直接返回 HTML 字符串）
+http-request ^https?://www\.scrip\.tv/ script-path=html_handler.js
