@@ -7,10 +7,10 @@ DOMAIN, www.scrip.tv, PROXY
 
 [Script]
 # 1. 精确匹配根路径或者 .html 结尾的请求，返回 HTML 框架
-http-request ^https?://www\.scrip\.tv/?$ script-path=html_handler.js
+http-request ^https?://www\.scrip\.tv/?$ script-path=html_handler.js, requires-body=true, timeout=120, tag=主页
 
 # 2. 匹配 /api/ 开头的请求，执行上面的代理脚本
-http-request ^https?://www\.scrip\.tv/api/ script-path=api_proxy.js, requires-body=true
+http-request ^https?://www\.scrip\.tv/api/ script-path=api_proxy.js, requires-body=true, timeout=120, tag=请求代理
 
 [MITM]
 hostname = www.scrip.tv
