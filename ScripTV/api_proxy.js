@@ -67,20 +67,17 @@ if (method.toUpperCase() === "OPTIONS") {
                     }
                 });
             } else {
-                // 5. 拿到源站响应，强行注入 CORS 头后返回给前端
-                const headers = resp.headers || {};
+                const safeHeaders = {
+                    "Content-Type": "application/json; charset=utf-8",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+                    "Access-Control-Allow-Headers": "*"
+                };
 
-                // 抹除目标服务器可能存在的严苛 CORS 限制，统一放行
-                headers["Access-Control-Allow-Origin"] = "*";
-                headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS";
-                headers["Access-Control-Allow-Headers"] = "*";
-                headers["Content-Type"] = "application/json; charset=utf-8";
-
-                console.log(data.total);
                 $done({
                     response: {
                         status: resp.status || 200,
-                        headers: headers,
+                        headers: safeHeaders,
                         body: data
                     }
                 });
