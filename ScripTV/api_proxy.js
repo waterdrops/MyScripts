@@ -1,87 +1,20 @@
-// 文件名: api_proxy.js
-const url = $request.url;
-const method = $request.method;
+// api_proxy.js — 代理转发
 
-// 1. 处理 OPTIONS 预检请求（浏览器跨域机制必备）
-if (method.toUpperCase() === "OPTIONS") {
-    $done({
-        response: {
-            status: 204,
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-                "Access-Control-Allow-Headers": "*",
-                "Access-Control-Max-Age": "86400"
-            }
-        }
-    });
+const targetUrl = decodeURIComponent($request.url.match(/target=([^&]*)/)?.[1] || "");
+
+if (!targetUrl) {
+    $done({ response: { status: 400, headers: { "Content-Type": "application/json" }, body: '{"error":"missing target"}' } });
 } else {
-    // 2. 从当前 URL 提取真实的采集源地址
-    // 前端请求示例: https://www.scrip.tv/api/?target=https%3A%2F%2Fapi.maccms.com%2Fapi.php
-    const match = url.match(/target=([^&]*)/);
-
-    if (!match || !match[1]) {
+    $httpClient.get({ url: targetUrl }, function (err, resp, data) {
         $done({
             response: {
-                status: 400,
+                status: err ? 502 : (resp.status || 200),
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json; charset=utf-8",
                     "Access-Control-Allow-Origin": "*"
                 },
-                body: JSON.stringify({ error: "缺少 target 参数" })
+                body: err ? JSON.stringify({ error: String(err) }) : data
             }
         });
-    } else {
-        const targetUrl = decodeURIComponent(match[1]);
-
-        // 3. 构造转发请求
-        const requestOptions = {
-            url: targetUrl,
-            method: method,
-            headers: {
-                // 伪装常规浏览器，防止部分 CMS 接口拦截
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-            }
-        };
-
-        // 如果是 POST 请求，原样透传 Body 和 Content-Type
-        if ($request.body) {
-            requestOptions.body = $request.body;
-            const reqContentType = $request.headers['Content-Type'] || $request.headers['content-type'];
-            if (reqContentType) {
-                requestOptions.headers['Content-Type'] = reqContentType;
-            }
-        }
-
-        // 4. 发起真实网络请求
-        $httpClient[method.toLowerCase()](requestOptions, function (error, resp, data) {
-            if (error) {
-                $done({
-                    response: {
-                        status: 502,
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Access-Control-Allow-Origin": "*"
-                        },
-                        body: JSON.stringify({ error: "网关转发失败", details: String(error) })
-                    }
-                });
-            } else {
-                const safeHeaders = {
-                    "Content-Type": "application/json; charset=utf-8",
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-                    "Access-Control-Allow-Headers": "*"
-                };
-
-                $done({
-                    response: {
-                        status: resp.status || 200,
-                        headers: safeHeaders,
-                        body: data
-                    }
-                });
-            }
-        });
-    }
+    });
 }
