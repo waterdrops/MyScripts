@@ -24,9 +24,9 @@ if (method.toUpperCase() === "OPTIONS") {
         $done({
             response: {
                 status: 400,
-                headers: { 
+                headers: {
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*" 
+                    "Access-Control-Allow-Origin": "*"
                 },
                 body: JSON.stringify({ error: "缺少 target 参数" })
             }
@@ -54,14 +54,14 @@ if (method.toUpperCase() === "OPTIONS") {
         }
 
         // 4. 发起真实网络请求
-        $httpClient[method.toLowerCase()](requestOptions, function(error, resp, data) {
+        $httpClient[method.toLowerCase()](requestOptions, function (error, resp, data) {
             if (error) {
                 $done({
                     response: {
                         status: 502,
-                        headers: { 
+                        headers: {
                             "Content-Type": "application/json",
-                            "Access-Control-Allow-Origin": "*" 
+                            "Access-Control-Allow-Origin": "*"
                         },
                         body: JSON.stringify({ error: "网关转发失败", details: String(error) })
                     }
@@ -69,10 +69,12 @@ if (method.toUpperCase() === "OPTIONS") {
             } else {
                 // 5. 拿到源站响应，强行注入 CORS 头后返回给前端
                 const headers = resp.headers || {};
-                
+
                 // 抹除目标服务器可能存在的严苛 CORS 限制，统一放行
                 headers["Access-Control-Allow-Origin"] = "*";
                 headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS";
+                headers["Access-Control-Allow-Headers"] = "*";
+                headers["Content-Type"] = "application/json; charset=utf-8";
 
                 $done({
                     response: {
