@@ -2,7 +2,7 @@
 #!desc=ScripTV 在线观影
 #!author=Takagivegeta
 #!homepage=www.scrip.tv
-#icon=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/ScripTV/scriptv.png
+#icon=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/ScripTV/scriptv.jpeg
 
 [Script]
 http-request ^https?:\/\/www\.scrip\.tv\/?$ script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/ScripTV/html_handler.js, requires-body=true, timeout=120, tag=前端界面
