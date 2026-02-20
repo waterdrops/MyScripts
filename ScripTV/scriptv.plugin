@@ -1,6 +1,7 @@
 #!name=ScripTV
 #!desc=ScripTV 在线观影
 #!author=Takagivegeta
+#!openurl=https://www.scrip.tv
 #!icon=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/ScripTV/scriptv.png
 
 [Script]
