@@ -5,6 +5,22 @@
 #!icon=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/ScripTV/scriptv.png
 
 [Rule]
+DOMAIN,www.hongniuzy2.com,PROXY
+DOMAIN,ikunzyapi.com,PROXY
+DOMAIN,api.1080zyku.com,PROXY
+DOMAIN,lovedan.net,PROXY
+DOMAIN,www.moduzy.com,PROXY
+DOMAIN,jkunzyapi.com,PROXY
+DOMAIN,155api.com,PROXY
+DOMAIN,apilsbzy1.com,PROXY
+DOMAIN,hsckzy.vip,PROXY
+DOMAIN,yutuzy10.com,PROXY
+DOMAIN,www.msnii.com,PROXY
+DOMAIN,www.xrbsp.com,PROXY
+DOMAIN,www.gdlsp.com,PROXY
+DOMAIN,www.kxgav.com,PROXY
+DOMAIN,www.pgxdy.com,PROXY
+
 DOMAIN,ffzy5.tv,DIRECT
 DOMAIN,ffzy1.tv,DIRECT
 DOMAIN,wolongzyw.com,DIRECT
@@ -23,21 +39,17 @@ DOMAIN,360zy.com,DIRECT
 DOMAIN,caiji.dyttzyapi.com,DIRECT
 DOMAIN,cj.rycjapi.com,DIRECT
 DOMAIN,wwzy.tv,DIRECT
-DOMAIN,www.hongniuzy2.com,DIRECT
 DOMAIN,api.guangsuapi.com,DIRECT
-DOMAIN,ikunzyapi.com,DIRECT
 DOMAIN,api.ukuapi.com,DIRECT
 DOMAIN,www.huyaapi.com,DIRECT
 DOMAIN,api.xinlangapi.com,DIRECT
 DOMAIN,cj.lziapi.com,DIRECT
 DOMAIN,hhzyapi.com,DIRECT
 DOMAIN,jyzyapi.com,DIRECT
-DOMAIN,api.1080zyku.com,DIRECT
-DOMAIN,lovedan.net,DIRECT
 DOMAIN,lbapi9.com,DIRECT
-DOMAIN,www.moduzy.com,DIRECT
 DOMAIN,api.ffzyapi.com,DIRECT
 DOMAIN,cj.ffzyapi.com,DIRECT
+DOMAIN,www.ckzy1.com,DIRECT
 
 [Script]
 http-request ^https?:\/\/www\.scrip\.tv\/?$ script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/ScripTV/html_handler.js, requires-body=true, timeout=120, tag=前端界面
