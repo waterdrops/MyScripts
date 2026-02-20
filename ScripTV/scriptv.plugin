@@ -4,6 +4,41 @@
 #!openurl=https://www.scrip.tv
 #!icon=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/ScripTV/scriptv.png
 
+[Rule]
+DOMAIN,ffzy5.tv,DIRECT
+DOMAIN,ffzy1.tv,DIRECT
+DOMAIN,wolongzyw.com,DIRECT
+DOMAIN,collect.wolongzyw.com,DIRECT
+DOMAIN,api.zuidapi.com,DIRECT
+DOMAIN,api.apibdzy.com,DIRECT
+DOMAIN,bfzyapi.com,DIRECT
+DOMAIN,app.bfzyapi.com,DIRECT
+DOMAIN,jszyapi.com,DIRECT
+DOMAIN,tyyszy.com,DIRECT
+DOMAIN,tyyszyapi.com,DIRECT
+DOMAIN,api.wujinapi.com,DIRECT
+DOMAIN,api.wujinapi.me,DIRECT
+DOMAIN,www.mdzyapi.com,DIRECT
+DOMAIN,360zy.com,DIRECT
+DOMAIN,caiji.dyttzyapi.com,DIRECT
+DOMAIN,cj.rycjapi.com,DIRECT
+DOMAIN,wwzy.tv,DIRECT
+DOMAIN,www.hongniuzy2.com,DIRECT
+DOMAIN,api.guangsuapi.com,DIRECT
+DOMAIN,ikunzyapi.com,DIRECT
+DOMAIN,api.ukuapi.com,DIRECT
+DOMAIN,www.huyaapi.com,DIRECT
+DOMAIN,api.xinlangapi.com,DIRECT
+DOMAIN,cj.lziapi.com,DIRECT
+DOMAIN,hhzyapi.com,DIRECT
+DOMAIN,jyzyapi.com,DIRECT
+DOMAIN,api.1080zyku.com,DIRECT
+DOMAIN,lovedan.net,DIRECT
+DOMAIN,lbapi9.com,DIRECT
+DOMAIN,www.moduzy.com,DIRECT
+DOMAIN,api.ffzyapi.com,DIRECT
+DOMAIN,cj.ffzyapi.com,DIRECT
+
 [Script]
 http-request ^https?:\/\/www\.scrip\.tv\/?$ script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/ScripTV/html_handler.js, requires-body=true, timeout=120, tag=前端界面
 
