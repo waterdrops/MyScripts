@@ -1,9 +1,0 @@
-#!name=ES File Explorer (iOS) 会员解锁
-#!desc=ES File Explorer (iOS) 会员解锁
-#!author=Takagivegeta
-
-[Script]
-http-response ^https:\/\/mv-ps\.xdplt\.com\/api\/v1\/user\/login script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/refs/heads/main/ESFile/esfe.js, requires-body=1, tag=ES_VIP_Unlock
-
-[MITM]
-hostname = mv-ps.xdplt.com
