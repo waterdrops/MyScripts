@@ -45,7 +45,7 @@ try {
     }
   }
 
-  // ---------- 3. upsert gold_subscription ----------
+  // ---------- 4. upsert gold_subscription ----------
   const subInfo = {
     expectedExpiration: now + 31536000,
     productId:
@@ -71,9 +71,10 @@ try {
     });
   }
 
-  // ---------- 4. upsert xp_boost_stackable ----------
+  // ---------- 5. upsert xp_boost_stackable ----------
   // bit operation, choose 2 or 3 as the multiplier randomly
-  const xpMultiplier = (now & 1) === 0 ? 2 : 3;
+  // const xpMultiplier = (now & 1) === 0 ? 2 : 3;
+  const xpMultiplier = 3
   const xpExpire = now + 3000;
 
   if (xpItem) {
@@ -95,7 +96,7 @@ try {
 
   userdata.subscriberLevel = "GOLD";
   
-  // ---------- 4. trackingProperties ----------
+  // ---------- 6. trackingProperties ----------
   const tp = userdata.trackingProperties;
   tp.has_item_immersive_subscription = true;
   tp.has_item_premium_subscription = true;
@@ -103,7 +104,7 @@ try {
   tp.has_item_gold_subscription = true;
   tp.has_item_max_subscription = true;
   
-  // ---------- 5. write back ----------
+  // ---------- 7. write back ----------
   r0.body = JSON.stringify(parsedBody);
   $done({ body: JSON.stringify(obj) });
   
